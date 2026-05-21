@@ -12,18 +12,25 @@ import { Type } from '../../interfaces/Type';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { GlobalVariables } from '../../core/services/global-variables';
+import { AppService } from '../../core/services/app-service';
+import { TypeService } from '../../core/services/type-service';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-form-creation',
   standalone: true,
   imports: [SelectModule, InputGroupModule, InputGroupAddon, InputNumberModule,
-     InputTextModule, FormsModule, Panel, ButtonModule, FloatLabelModule],
+     InputTextModule, FormsModule, Panel, ButtonModule, FloatLabelModule, AsyncPipe],
+     providers: [GlobalVariables, AppService, TypeService],
   templateUrl: './form-creation.html',
   styleUrl: './form-creation.scss',
 })
 export class FormCreation implements OnInit {
 
   private varService = inject(GlobalVariables);
+  private appService = inject(AppService);
+  private typeService = inject(TypeService);
+  
 
   idTicket:number | undefined;
   nameTicket:string | undefined;
@@ -37,11 +44,19 @@ export class FormCreation implements OnInit {
   statusTicket:Status | undefined;
   typeTicket:Type | undefined;
 
-  apps: string[]=["TestApp", "Cisco"];
-  types: string[]=["EN ATTENTE", "FINI"];
+  apps$ = this.appService.getAll();
+  types$ = this.typeService.getAll();
+
+  
 
   ngOnInit() {
     
     this.authorTicket = this.varService.currentUser;
+
+    this.types$.subscribe(data => console.log(data));
+
+    console.log(this.apps$);
+    console.log(this.types$);
+
   }
 }

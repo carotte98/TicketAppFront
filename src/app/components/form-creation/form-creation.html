@@ -26,7 +26,7 @@
                     <p-inputgroup-addon>
                         <i class="pi pi-map"></i>
                     </p-inputgroup-addon>
-                    <p-select [(ngModel)]="appTicket" [options]="apps" optionLabel="Application" placeholder="Application" />
+                    <p-select [(ngModel)]="appTicket" [options]="apps$ | async" optionLabel="nameApp" placeholder="Application" />
                 </p-inputgroup>
 
                 <!-- TYPE -->
@@ -34,7 +34,7 @@
                     <p-inputgroup-addon>
                         <i class="pi pi-map"></i>
                     </p-inputgroup-addon>
-                    <p-select [(ngModel)]="typeTicket" [options]="types" optionLabel="Name" placeholder="Type" />
+                    <p-select [(ngModel)]="typeTicket" [options]="types$ | async" optionLabel="nameTicketType" placeholder="Type" />
                 </p-inputgroup>
             </div>
         </section>
