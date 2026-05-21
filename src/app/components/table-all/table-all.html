@@ -1,0 +1,30 @@
+<div class="card">
+    <p-table [value]="(tickets$ | async) ?? []" stripedRows [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>ID</th>
+                <th>Nom Du Ticket</th>
+                <th>Auteur</th>
+                <th>Responsable</th>
+                <th>Date de début</th>
+                <th>Dernière MàJ</th>
+                <th>Application</th>
+                <th>Type</th>
+                <th>Statut</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-ticket>
+            <tr>
+                <td>{{ ticket.idTicket }}</td>
+                <td>{{ ticket.nameTicket }}</td>
+                <td>{{ ticket.authorTicket }}</td>
+                <td>{{ ticket.devTicket }}</td>
+                <td>{{ ticket.startdateTicket }}</td>
+                <td>{{ ticket.updateDateTicket }}</td>
+                <td>{{ ticket.appTicket.name }}</td>
+                <td>{{ ticket.typeTicket.name }}</td>
+                <td>{{ ticket.statusTicket.name }}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

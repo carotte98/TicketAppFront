@@ -13,5 +13,5 @@ export interface Ticket{
     updateDateTicket:Date;
     appTicket:App;
     statusTicket:Status;
-    tyeTicket:Type;
+    typeTicket:Type;
 }
