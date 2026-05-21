@@ -50,11 +50,11 @@
         <section class="flex flex-row w-full justify-end">
 
             <div class="card flex justify-center m-4">
-                <p-button label="Annuler" />
+                <p-button (onClick)="onCancel()" label="Annuler" />
             </div>
 
             <div class="card flex justify-center m-4">
-                <p-button label="Soumettre" />
+                <p-button (onClick)="onSave()" label="Soumettre"  />
             </div>
             
         </section>

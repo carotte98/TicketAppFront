@@ -1,4 +1,4 @@
 export interface App{
-    id:number;
-    name:string;
+    idApp:number;
+    nameApp:string;
 }
