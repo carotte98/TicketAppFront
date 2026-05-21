@@ -1,0 +1,59 @@
+<div class="m-5">
+    <p-panel header="Consultation d un Ticket">
+        <section class="flex flex-row w-full">
+            
+                <div class="m-2 w-1/2">
+                <!-- NOM DU TICKET -->
+                <p-inputgroup class="my-2">
+                    <p-inputgroup-addon>
+                        <i class="pi pi-file"></i>
+                    </p-inputgroup-addon>
+                    <input pInputText [(ngModel)]="nameTicket" placeholder="Nom du Ticket" />
+                </p-inputgroup>
+
+                <!-- NOM DE L'AUTEUR -->
+                <p-inputgroup class="my-2">
+                    <p-inputgroup-addon>
+                        <i class="pi pi-user"></i>
+                    </p-inputgroup-addon>
+                    <input pInputText disabled [(ngModel)]="authorTicket" placeholder="Nom de l'auteur" />
+                </p-inputgroup>
+            </div>
+
+            <div class="m-2 w-1/2">
+                <!-- APPLICATION -->
+                <p-inputgroup class="my-2">
+                    <p-inputgroup-addon>
+                        <i class="pi pi-map"></i>
+                    </p-inputgroup-addon>
+                    <p-select [(ngModel)]="appTicket" [options]="apps$ | async" optionLabel="nameApp" placeholder="Application" />
+                </p-inputgroup>
+
+                <!-- TYPE -->
+                <p-inputgroup class="my-2">
+                    <p-inputgroup-addon>
+                        <i class="pi pi-map"></i>
+                    </p-inputgroup-addon>
+                    <p-select [(ngModel)]="typeTicket" [options]="types$ | async" optionLabel="nameTicketType" placeholder="Type" />
+                </p-inputgroup>
+            </div>
+        </section>
+
+        <!-- MESSAGE DE L'AUTEUR -->
+        <p-inputgroup class="my-2">
+            <p-inputgroup-addon>
+                <i class="pi pi-pencil"></i>
+            </p-inputgroup-addon>
+            <input pInputText [(ngModel)]="authorMsgTicket" placeholder="Message de l'auteur" />
+        </p-inputgroup>
+
+        <section class="flex flex-row w-full justify-end">
+
+            <div class="card flex justify-center m-4">
+                <p-button (onClick)="onCancel()" label="Retour" />
+            </div>
+
+            
+        </section>
+    </p-panel>
+</div>

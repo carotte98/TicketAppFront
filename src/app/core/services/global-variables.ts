@@ -7,4 +7,5 @@ export class GlobalVariables {
 
   public currentUser:string = "Brahim";
   public currentRole:string = "dev";
+  public currentId:number = 0;
 }

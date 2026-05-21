@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { MainDev } from './components/main-dev/main-dev';
 import { FormCreation } from './components/form-creation/form-creation';
+import { Consultation } from './components/consultation/consultation';
 
 export const routes: Routes = [
     {
@@ -12,5 +13,10 @@ export const routes: Routes = [
         path: 'forms',
         component: FormCreation,
         title: 'Soumission'
+    },
+    {
+        path: 'consult',
+        component: Consultation,
+        title: 'Consultation'
     }
 ];
