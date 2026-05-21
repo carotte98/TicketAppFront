@@ -1,6 +1,7 @@
-import { Component, computed, signal, OnInit } from '@angular/core';
+import { Component, computed, signal, OnInit, inject } from '@angular/core';
 import { MenubarModule } from 'primeng/menubar';
 import { MenuItem } from 'primeng/api';
+import { GlobalVariables } from '../../core/services/global-variables';
 
 
 @Component({
@@ -10,7 +11,9 @@ import { MenuItem } from 'primeng/api';
   styleUrl: './barre-navigation.scss',
 })
 export class BarreNavigation implements OnInit {
+
   items: MenuItem[] | undefined;
+  private varService = inject(GlobalVariables);
   currentUser = signal("Brahim");
 
   userLabel = computed(() => `Bonjour ${this.currentUser()}`);
@@ -27,15 +30,21 @@ export class BarreNavigation implements OnInit {
               items: [
                   {
                       label: 'Brahim',
-                      command: () => { this.currentUser.set("Brahim") }
+                      command: () => { this.varService.currentUser = "Brahim";
+                        this.currentUser.set("Brahim")
+                       }
                   },
                   {
                       label: 'Benoît',
-                      command: () => { this.currentUser.set("Benoît") }
+                      command: () => { this.varService.currentUser = "Benoît";
+                        this.currentUser.set("Benoît")
+                       }
                   },
                   {
                       label: 'Stephane',
-                      command: () => { this.currentUser.set("Stephane") }
+                      command: () => { this.varService.currentUser = "Stephane";
+                        this.currentUser.set("Stephane")
+                       }
                   }
               ]
           },
@@ -45,15 +54,21 @@ export class BarreNavigation implements OnInit {
               items: [
                   {
                       label: 'Maxime',
-                      command: () => { this.currentUser.set("Maxime") }
+                      command: () => { this.varService.currentUser = "Maxime";
+                        this.currentUser.set("Maxime")
+                       }
                   },
                   {
                       label: 'Alex',
-                      command: () => { this.currentUser.set("Alex") }
+                      command: () => { this.varService.currentUser = "Alex";
+                        this.currentUser.set("Alex")
+                       }
                   },
                   {
                       label: 'Jean',
-                      command: () => { this.currentUser.set("Jean") }
+                      command: () => { this.varService.currentUser = "Jean";
+                        this.currentUser.set("Jean")
+                       }
                   }
               ]
           }

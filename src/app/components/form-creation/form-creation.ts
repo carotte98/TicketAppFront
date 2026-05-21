@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SelectModule } from 'primeng/select';
 import { InputGroupModule } from 'primeng/inputgroup';
@@ -11,6 +11,7 @@ import { Status } from '../../interfaces/Status';
 import { Type } from '../../interfaces/Type';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
+import { GlobalVariables } from '../../core/services/global-variables';
 
 @Component({
   selector: 'app-form-creation',
@@ -20,7 +21,10 @@ import { FloatLabelModule } from 'primeng/floatlabel';
   templateUrl: './form-creation.html',
   styleUrl: './form-creation.scss',
 })
-export class FormCreation {
+export class FormCreation implements OnInit {
+
+  private varService = inject(GlobalVariables);
+
   idTicket:number | undefined;
   nameTicket:string | undefined;
   authorTicket:string | undefined;
@@ -35,4 +39,9 @@ export class FormCreation {
 
   apps: string[]=["TestApp", "Cisco"];
   types: string[]=["EN ATTENTE", "FINI"];
+
+  ngOnInit() {
+    
+    this.authorTicket = this.varService.currentUser;
+  }
 }
