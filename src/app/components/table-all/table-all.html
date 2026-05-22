@@ -2,15 +2,60 @@
     <p-table [value]="(tickets$ | async) ?? []" stripedRows [tableStyle]="{ 'min-width': '50rem' }">
         <ng-template pTemplate="header">
             <tr>
-                <th>ID</th>
-                <th>Nom Du Ticket</th>
-                <th>Auteur</th>
-                <th>Responsable</th>
-                <th>Date de début</th>
-                <th>Dernière MàJ</th>
-                <th>Application</th>
-                <th>Type</th>
-                <th>Statut</th>
+                <th pSortableColumn="id" style="width:20%">
+                    <div class="flex items-center gap-2">
+                        ID
+                        <p-sortIcon field="idTicket" />
+                    </div>
+                </th>
+                <th pSortableColumn="nameTicket" style="width:20%">
+                    <div class="flex items-center gap-2">
+                        Nom
+                        <p-sortIcon field="nameTicket" />
+                    </div>
+                </th>
+                <th pSortableColumn="authorTicket" style="width:20%">
+                    <div class="flex items-center gap-2">
+                        Auteur
+                        <p-sortIcon field="authorTicket" />
+                    </div>
+                </th>
+                <th pSortableColumn="devTicket" style="width:20%">
+                    <div class="flex items-center gap-2">
+                        Responsable
+                        <p-sortIcon field="devTicket" />
+                    </div>
+                </th>
+                <th pSortableColumn="startdateTicket" style="width:20%">
+                    <div class="flex items-center gap-2">
+                        Date de début
+                        <p-sortIcon field="startdateTicket" />
+                    </div>
+                </th>
+                <th pSortableColumn="updateDateTicket" style="width:20%">
+                    <div class="flex items-center gap-2">
+                        Date MàJ
+                        <p-sortIcon field="updateDateTicket" />
+                    </div>
+                </th>
+                <th pSortableColumn="appTicket.name" style="width:20%">
+                    <div class="flex items-center gap-2">
+                        Application
+                        <p-sortIcon field="appTicket.name" />
+                    </div>
+                </th>
+                <th pSortableColumn="typeTicket.name" style="width:20%">
+                    <div class="flex items-center gap-2">
+                        Type
+                        <p-sortIcon field="typeTicket.name" />
+                    </div>
+                </th>
+                <th pSortableColumn="statusTicket.name" style="width:20%">
+                    <div class="flex items-center gap-2">
+                        Statut
+                        <p-sortIcon field="statusTicket.name" />
+                    </div>
+                </th>
                 <th></th>
             </tr>
         </ng-template>
