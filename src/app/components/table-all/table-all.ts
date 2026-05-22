@@ -1,8 +1,6 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { Table, TableModule } from 'primeng/table';
+import { Component, inject, signal } from '@angular/core';
+import { TableModule } from 'primeng/table';
 import { TicketService } from '../../core/services/TicketService';
-import { Ticket } from '../../interfaces/Ticket';
-import { ChangeDetectorRef } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { GlobalVariables } from '../../core/services/global-variables';
@@ -22,6 +20,10 @@ export class TableAll {
   private router = inject(Router);
 
   tickets$ = this.ticketService.getAll();
+  Role$ = this.varService.currentRole$;
+
+  
+
 
 
   onClick(id:any){

@@ -2,6 +2,7 @@ import { Component, computed, signal, OnInit, inject } from '@angular/core';
 import { MenubarModule } from 'primeng/menubar';
 import { MenuItem } from 'primeng/api';
 import { GlobalVariables } from '../../core/services/global-variables';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -14,6 +15,7 @@ export class BarreNavigation implements OnInit {
 
   items: MenuItem[] | undefined;
   private varService = inject(GlobalVariables);
+  private router = inject(Router);
   currentUser = signal("Brahim");
 
   userLabel = computed(() => `Bonjour ${this.currentUser()}`);
@@ -31,19 +33,25 @@ export class BarreNavigation implements OnInit {
                   {
                       label: 'Brahim',
                       command: () => { this.varService.currentUser = "Brahim";
-                        this.currentUser.set("Brahim")
+                            this.currentUser.set("Brahim");
+                            this.varService.setRole("Dev");
+                            this.router.navigate(['']);
                        }
                   },
                   {
                       label: 'Benoît',
                       command: () => { this.varService.currentUser = "Benoît";
-                        this.currentUser.set("Benoît")
+                            this.currentUser.set("Benoît");
+                            this.varService.setRole("Dev");
+                            this.router.navigate(['']);
                        }
                   },
                   {
                       label: 'Stephane',
                       command: () => { this.varService.currentUser = "Stephane";
-                        this.currentUser.set("Stephane")
+                            this.currentUser.set("Stephane");
+                            this.varService.setRole("Dev");
+                            this.router.navigate(['']);
                        }
                   }
               ]
@@ -55,19 +63,25 @@ export class BarreNavigation implements OnInit {
                   {
                       label: 'Maxime',
                       command: () => { this.varService.currentUser = "Maxime";
-                        this.currentUser.set("Maxime")
+                            this.currentUser.set("Maxime");
+                            this.varService.setRole("User");
+                            this.router.navigate(['']);
                        }
                   },
                   {
                       label: 'Alex',
                       command: () => { this.varService.currentUser = "Alex";
-                        this.currentUser.set("Alex")
+                            this.currentUser.set("Alex");
+                            this.varService.setRole("User");
+                            this.router.navigate(['']);
                        }
                   },
                   {
                       label: 'Jean',
                       command: () => { this.varService.currentUser = "Jean";
-                        this.currentUser.set("Jean")
+                            this.currentUser.set("Jean");
+                            this.varService.setRole("User");
+                            this.router.navigate(['']);
                        }
                   }
               ]
