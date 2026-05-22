@@ -9,8 +9,14 @@
                     <p-inputgroup-addon>
                         <i class="pi pi-file"></i>
                     </p-inputgroup-addon>
-                    <input pInputText [(ngModel)]="nameTicket" placeholder="Nom du Ticket" />
+                    <input pInputText [(ngModel)]="nameTicket" placeholder="Nom du Ticket"
+                        [invalid]="valNameTicket" />
                 </p-inputgroup>
+                @if (valNameTicket) {
+                        <p-message severity="error" variant="simple" size="small">
+                            Le Nom du Ticket est obligatoire ! (3 à 50 caractères)
+                        </p-message>
+                    }
 
                 <!-- NOM DE L'AUTEUR -->
                 <label>Nom de l'auteur</label>
@@ -18,8 +24,14 @@
                     <p-inputgroup-addon>
                         <i class="pi pi-user"></i>
                     </p-inputgroup-addon>
-                    <input pInputText disabled [(ngModel)]="authorTicket" placeholder="Nom de l'auteur" />
+                    <input pInputText disabled [(ngModel)]="authorTicket" placeholder="Nom de l'auteur"
+                        [invalid]="valAuthorTicket" />
                 </p-inputgroup>
+                @if (valAuthorTicket) {
+                        <p-message severity="error" variant="simple" size="small">
+                            Le Nom de l'auteur est obligatoire ! (3 à 50 caractères)
+                        </p-message>
+                    }
             </div>
 
             <div class="m-2 w-1/2">
@@ -29,8 +41,14 @@
                     <p-inputgroup-addon>
                         <i class="pi pi-map"></i>
                     </p-inputgroup-addon>
-                    <p-select [(ngModel)]="appTicket" [options]="apps$ | async" optionLabel="nameApp" placeholder="Application" />
+                    <p-select [(ngModel)]="appTicket" [options]="apps$ | async" optionLabel="nameApp" 
+                    placeholder="Application" [invalid]="valAppTicket" />
                 </p-inputgroup>
+                @if (valAppTicket) {
+                        <p-message severity="error" variant="simple" size="small">
+                            Veuillez choisir une Application !
+                        </p-message>
+                    }
 
                 <!-- TYPE -->
                 <label>Type de Ticket</label>
@@ -38,8 +56,14 @@
                     <p-inputgroup-addon>
                         <i class="pi pi-map"></i>
                     </p-inputgroup-addon>
-                    <p-select [(ngModel)]="typeTicket" [options]="types$ | async" optionLabel="nameTicketType" placeholder="Type" />
+                    <p-select [(ngModel)]="typeTicket" [options]="types$ | async" 
+                    optionLabel="nameTicketType" placeholder="Type" [invalid]="valTypeTicket"/>
                 </p-inputgroup>
+                @if (valTypeTicket) {
+                        <p-message severity="error" variant="simple" size="small">
+                            Veuillez choisir un Type ! 
+                        </p-message>
+                    }
             </div>
         </section>
 
@@ -49,8 +73,14 @@
             <p-inputgroup-addon>
                 <i class="pi pi-pencil"></i>
             </p-inputgroup-addon>
-            <input pInputText [(ngModel)]="authorMsgTicket" placeholder="Message de l'auteur" />
+            <input pInputText [(ngModel)]="authorMsgTicket" placeholder="Message de l'auteur"
+                [invalid]="valAuthorMsgTicket" />
         </p-inputgroup>
+        @if (valAuthorMsgTicket) {
+            <p-message severity="error" variant="simple" size="small">
+                La Description du Ticket est obligatoire ! (5 à 50 caractères)
+            </p-message>
+        }
 
         <section class="flex flex-row w-full justify-end">
 

@@ -17,12 +17,13 @@ import { AsyncPipe } from '@angular/common';
 import { TicketService } from '../../core/services/TicketService';
 import { CreateTicket } from '../../interfaces/CreateTicket';
 import { Router } from '@angular/router';
+import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'app-form-creation',
   standalone: true,
   imports: [SelectModule, InputGroupModule, InputGroupAddon, InputNumberModule,
-     InputTextModule, FormsModule, Panel, ButtonModule, FloatLabelModule, AsyncPipe],
+     InputTextModule, FormsModule, Panel, ButtonModule, FloatLabelModule, AsyncPipe, MessageModule],
      providers: [AppService, TypeService, TicketService, Router],
   templateUrl: './form-creation.html',
   styleUrl: './form-creation.scss',
@@ -45,6 +46,13 @@ export class FormCreation implements OnInit {
   apps$ = this.appService.getAll();
   types$ = this.typeService.getAll();
 
+  // VARIABLES DE VALIDATIONS
+  valNameTicket: boolean | undefined;
+  valAuthorTicket: boolean | undefined;
+  valAuthorMsgTicket: boolean | undefined;
+  valAppTicket: boolean | undefined;
+  valTypeTicket: boolean | undefined;
+
   
 
   ngOnInit() {
@@ -57,34 +65,76 @@ export class FormCreation implements OnInit {
 
   }
 
-  onSave(){
+  onValidate():boolean{
 
-    console.log("click");
-    console.log(this.typeTicket)
+    let flag = false;
 
-    let newTicket:CreateTicket = {
-      nameTicket: this.nameTicket!,
-      authorTicket: this.authorTicket!,
-      authorMsgTicket: this.authorMsgTicket!,
-      startdateTicket: new Date(),
-      updateDateTicket: new Date(),
-      appTicket: this.appTicket!.idApp,
-      statusTicket: 1,
-      typeTicket: this.typeTicket!.idTicketType,
+    this.valNameTicket = false;
+    this.valAuthorTicket = false;
+    this.valAuthorMsgTicket = false;
+    this.valAppTicket = false;
+    this.valTypeTicket = false;
+
+    if(this.nameTicket === undefined || this.nameTicket!.length < 3){
+      flag = true;
+      this.valNameTicket = true;
     }
 
-    console.log(newTicket);
+    if(this.authorTicket === undefined || this.authorTicket!.length < 3){
+      flag = true;
+      this.valAuthorTicket = true;
+    }
 
-    this.ticketService.postTicket(newTicket).subscribe({
-      next: (response) => {
-        console.log('Ticket created', response);
-      },
-      error: (err) => {
-        console.error('API error', err);
+    if(this.authorMsgTicket === undefined || this.authorMsgTicket!.length < 5){
+      flag = true;
+      this.valAuthorMsgTicket = true;
+    }
+
+    if(this.appTicket === undefined){
+      flag = true;
+      this.valAppTicket = true;
+    }
+
+    if(this.typeTicket === undefined){
+      flag = true;
+      this.valTypeTicket = true;
+    }
+
+    return flag;
+  }
+
+  onSave(){
+
+    if(!this.onValidate()){
+      
+      console.log("click");
+      console.log(this.typeTicket)
+
+      let newTicket:CreateTicket = {
+        nameTicket: this.nameTicket!,
+        authorTicket: this.authorTicket!,
+        authorMsgTicket: this.authorMsgTicket!,
+        startdateTicket: new Date(),
+        updateDateTicket: new Date(),
+        appTicket: this.appTicket!.idApp,
+        statusTicket: 1,
+        typeTicket: this.typeTicket!.idTicketType,
       }
-    });
 
-    this.router.navigate(['']);
+      console.log(newTicket);
+
+      this.ticketService.postTicket(newTicket).subscribe({
+        next: (response) => {
+          console.log('Ticket created', response);
+        },
+        error: (err) => {
+          console.error('API error', err);
+        }
+      });
+
+      this.router.navigate(['']);
+    }
+    
   
   }
 

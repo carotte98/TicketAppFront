@@ -40,8 +40,13 @@
                         <i class="pi pi-map"></i>
                     </p-inputgroup-addon>
                     <p-select [(ngModel)]="typeTicket" [options]="types$ | async"
-                        optionLabel="nameTicketType" placeholder="Type" />
+                        optionLabel="nameTicketType" placeholder="Type" [invalid]="valTypeTicket" />
                 </p-inputgroup>
+                @if (valTypeTicket) {
+                    <p-message severity="error" variant="simple" size="small">
+                        Veuillez choisir un Type ! 
+                    </p-message>
+                }
             </div>
 
             
@@ -67,8 +72,14 @@
                     <p-inputgroup-addon>
                         <i class="pi pi-user"></i>
                     </p-inputgroup-addon>
-                    <input pInputText [(ngModel)]="devTicket" placeholder="Responsable du Ticket" />
+                    <input pInputText [(ngModel)]="devTicket" placeholder="Responsable du Ticket"
+                        [invalid]="valDevTicket" />
                 </p-inputgroup>
+                @if (valDevTicket) {
+                    <p-message severity="error" variant="simple" size="small">
+                        Le Nom du Dev est obligatoire ! (3 à 50 caractères) 
+                    </p-message>
+                }
             </div>
 
             <div class="m-2 w-1/2">
@@ -79,8 +90,13 @@
                         <i class="pi pi-map"></i>
                     </p-inputgroup-addon>
                     <p-select [(ngModel)]="statusTicket" [options]="status$ | async"
-                        optionLabel="nameStatus" placeholder="Status" />
+                        optionLabel="nameStatus" placeholder="Status" [invalid]="valStatusTicket" />
                 </p-inputgroup>
+                @if (valStatusTicket) {
+                    <p-message severity="error" variant="simple" size="small">
+                        Veuillez choisir un Statut ! 
+                    </p-message>
+                }
 
             </div>
 
@@ -93,8 +109,14 @@
             <p-inputgroup-addon>
                 <i class="pi pi-pencil"></i>
             </p-inputgroup-addon>
-            <input pInputText [(ngModel)]="devMsgTicket" placeholder="Message du dev" />
+            <input pInputText [(ngModel)]="devMsgTicket" placeholder="Message du dev"
+                [invalid]="valeDevMsg"/>
         </p-inputgroup>
+        @if (valeDevMsg) {
+            <p-message severity="error" variant="simple" size="small">
+                Le Message à l'utilisateur est obligatoire ! (5 à 50 caractères) 
+            </p-message>
+        }
 
 
         <section class="flex flex-row w-full justify-end">

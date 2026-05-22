@@ -19,11 +19,12 @@ import { UpdateTicket } from '../../interfaces/UpdateTicket';
 import { App } from '../../interfaces/App';
 import { Type } from '../../interfaces/Type';
 import { Status } from '../../interfaces/Status';
+import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'app-consultation',
   imports: [SelectModule, InputGroupModule, InputGroupAddon, InputNumberModule,
-     InputTextModule, FormsModule, Panel, ButtonModule, FloatLabelModule, AsyncPipe],
+     InputTextModule, FormsModule, Panel, ButtonModule, FloatLabelModule, AsyncPipe, MessageModule],
      providers: [AppService, TypeService, TicketService, Router],
   templateUrl: './consultation.html',
   styleUrl: './consultation.scss',
@@ -52,6 +53,12 @@ export class Consultation {
 
   current$ = this.ticketService.getById(this.varService.currentId);
 
+  // VARIABLES DE VALIDATIONS
+  valTypeTicket: boolean | undefined;
+  valStatusTicket: boolean | undefined;
+  valDevTicket: boolean | undefined;
+  valeDevMsg: boolean | undefined;
+
   
 
   ngOnInit() {
@@ -70,36 +77,77 @@ export class Consultation {
       
       this.cdr.detectChanges();
     });
+
+    
+
+    
+  }
+
+  onValidate():boolean{
+
+    let flag = false;
+
+    this.valTypeTicket = false;
+    this.valStatusTicket = false;
+    this.valDevTicket = false;
+    this.valeDevMsg = false;
+
+    console.log(this.statusTicket);
+    console.log(this.typeTicket);
+
+    if(this.statusTicket === null){
+      flag = true;
+      this.valStatusTicket = true;
+    }
+
+    if(this.devTicket === null || this.devTicket!.length < 3){
+      flag = true;
+      this.valDevTicket = true;
+    }
+
+    if(this.devMsgTicket === null || this.devMsgTicket!.length < 5){
+      flag = true;
+      this.valeDevMsg = true;
+    }
+
+    if(this.typeTicket === null){
+      flag = true;
+      this.valTypeTicket = true;
+    }
+
+    return flag;
   }
 
   onSave(){
 
-    console.log("click");
+    if(!this.onValidate()){
+      console.log("click");
     
 
-    let newTicket:UpdateTicket = {
-      devTicket: this.devTicket!,
-      devMsgTicket: this.devMsgTicket!,
-      authorMsgTicket: this.authorMsgTicket!,
-      updateDateTicket: new Date(),
-      idStatusTicket: this.statusTicket!.idStatus,
-      idTypeTicket: this.typeTicket!.idTicketType,
-    }
-    
-    console.log(newTicket);
-
-    console.log(newTicket);
-
-    this.ticketService.putTicket(newTicket, this.varService.currentId).subscribe({
-      next: (response) => {
-        console.log('Ticket updated', response);
-      },
-      error: (err) => {
-        console.error('API error', err);
+      let newTicket:UpdateTicket = {
+        devTicket: this.devTicket!,
+        devMsgTicket: this.devMsgTicket!,
+        authorMsgTicket: this.authorMsgTicket!,
+        updateDateTicket: new Date(),
+        idStatusTicket: this.statusTicket!.idStatus,
+        idTypeTicket: this.typeTicket!.idTicketType,
       }
-    });
+      
+      console.log(newTicket);
 
-    this.router.navigate(['']);
+      console.log(newTicket);
+
+      this.ticketService.putTicket(newTicket, this.varService.currentId).subscribe({
+        next: (response) => {
+          console.log('Ticket updated', response);
+        },
+        error: (err) => {
+          console.error('API error', err);
+        }
+      });
+
+      this.router.navigate(['']);
+    }
   
   }
 
