@@ -51,6 +51,8 @@ export class Consultation {
   types$ = this.typeService.getAll();
   status$ = this.statusService.getAll();
 
+  Role$ = this.varService.currentRole$;
+
   current$ = this.ticketService.getById(this.varService.currentId);
 
   // VARIABLES DE VALIDATIONS

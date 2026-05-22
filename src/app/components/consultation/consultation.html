@@ -39,7 +39,7 @@
                     <p-inputgroup-addon>
                         <i class="pi pi-map"></i>
                     </p-inputgroup-addon>
-                    <p-select [(ngModel)]="typeTicket" [options]="types$ | async"
+                    <p-select [(ngModel)]="typeTicket" [options]="types$ | async" [disabled]="(Role$ | async) !== 'Dev' && (Role$ | async) !== 'Responsable'"
                         optionLabel="nameTicketType" placeholder="Type" [invalid]="valTypeTicket"
                             optionValue="idTicketType" />
                 </p-inputgroup>
@@ -74,7 +74,7 @@
                         <i class="pi pi-user"></i>
                     </p-inputgroup-addon>
                     <input pInputText [(ngModel)]="devTicket" placeholder="Responsable du Ticket"
-                        [invalid]="valDevTicket" />
+                        [invalid]="valDevTicket" [disabled]="(Role$ | async) !== 'Responsable'" />
                 </p-inputgroup>
                 @if (valDevTicket) {
                     <p-message severity="error" variant="simple" size="small">
@@ -92,7 +92,7 @@
                     </p-inputgroup-addon>
                     <p-select [(ngModel)]="statusTicket" [options]="status$ | async"
                         optionLabel="nameStatus" placeholder="Status" [invalid]="valStatusTicket"
-                            optionValue="idStatus" />
+                            optionValue="idStatus" [disabled]="(Role$ | async) !== 'Dev' && (Role$ | async) !== 'Responsable'" />
                 </p-inputgroup>
                 @if (valStatusTicket) {
                     <p-message severity="error" variant="simple" size="small">
@@ -112,7 +112,7 @@
                 <i class="pi pi-pencil"></i>
             </p-inputgroup-addon>
             <input pInputText [(ngModel)]="devMsgTicket" placeholder="Message du dev"
-                [invalid]="valeDevMsg"/>
+                [invalid]="valeDevMsg" [disabled]="(Role$ | async) !== 'Dev' && (Role$ | async) !== 'Responsable'"/>
         </p-inputgroup>
         @if (valeDevMsg) {
             <p-message severity="error" variant="simple" size="small">
