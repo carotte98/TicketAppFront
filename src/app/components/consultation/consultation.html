@@ -1,14 +1,14 @@
 <div class="m-5">
     <p-panel header="Consultation d un Ticket">
         <section class="flex flex-row w-full">
-            
-                <div class="m-2 w-1/2">
+
+            <div class="m-2 w-1/2">
                 <!-- NOM DU TICKET -->
                 <p-inputgroup class="my-2">
                     <p-inputgroup-addon>
                         <i class="pi pi-file"></i>
                     </p-inputgroup-addon>
-                    <input pInputText [(ngModel)]="nameTicket" placeholder="Nom du Ticket" />
+                    <input pInputText disabled [(ngModel)]="nameTicket" placeholder="Nom du Ticket" />
                 </p-inputgroup>
 
                 <!-- NOM DE L'AUTEUR -->
@@ -26,7 +26,8 @@
                     <p-inputgroup-addon>
                         <i class="pi pi-map"></i>
                     </p-inputgroup-addon>
-                    <p-select [(ngModel)]="appTicket" [options]="apps$ | async" optionLabel="nameApp" placeholder="Application" />
+                    <p-select disabled [(ngModel)]="appTicket" [options]="apps$ | async" [optionValue]="appTicket?.nameApp"
+                        optionLabel="nameApp" placeholder="Application" />
                 </p-inputgroup>
 
                 <!-- TYPE -->
@@ -34,9 +35,12 @@
                     <p-inputgroup-addon>
                         <i class="pi pi-map"></i>
                     </p-inputgroup-addon>
-                    <p-select [(ngModel)]="typeTicket" [options]="types$ | async" optionLabel="nameTicketType" placeholder="Type" />
+                    <p-select [(ngModel)]="typeTicket" [options]="types$ | async"
+                        optionLabel="nameTicketType" placeholder="Type" />
                 </p-inputgroup>
             </div>
+
+            
         </section>
 
         <!-- MESSAGE DE L'AUTEUR -->
@@ -44,8 +48,46 @@
             <p-inputgroup-addon>
                 <i class="pi pi-pencil"></i>
             </p-inputgroup-addon>
-            <input pInputText [(ngModel)]="authorMsgTicket" placeholder="Message de l'auteur" />
+            <input pInputText disabled [(ngModel)]="authorMsgTicket" placeholder="Message de l'auteur" />
         </p-inputgroup>
+        
+
+        <section class="flex flex-row w-full">
+
+            <div class="m-2 w-1/2">
+                
+                <!-- NOM DU dev -->
+                <p-inputgroup class="my-2">
+                    <p-inputgroup-addon>
+                        <i class="pi pi-user"></i>
+                    </p-inputgroup-addon>
+                    <input pInputText [(ngModel)]="devTicket" placeholder="Responsable du Ticket" />
+                </p-inputgroup>
+            </div>
+
+            <div class="m-2 w-1/2">
+                <!-- Status -->
+                <p-inputgroup class="my-2">
+                    <p-inputgroup-addon>
+                        <i class="pi pi-map"></i>
+                    </p-inputgroup-addon>
+                    <p-select [(ngModel)]="statusTicket" [options]="status$ | async"
+                        optionLabel="nameStatus" placeholder="Status" />
+                </p-inputgroup>
+
+            </div>
+
+                
+        </section>
+
+        <!-- MESSAGE DU DEV -->
+        <p-inputgroup class="my-2">
+            <p-inputgroup-addon>
+                <i class="pi pi-pencil"></i>
+            </p-inputgroup-addon>
+            <input pInputText [(ngModel)]="devMsgTicket" placeholder="Message du dev" />
+        </p-inputgroup>
+
 
         <section class="flex flex-row w-full justify-end">
 
@@ -53,7 +95,11 @@
                 <p-button (onClick)="onCancel()" label="Retour" />
             </div>
 
-            
+            <div class="card flex justify-center m-4">
+                <p-button (onClick)="onSave()" label="Répondre"  />
+            </div>
+
+
         </section>
     </p-panel>
 </div>

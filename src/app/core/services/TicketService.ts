@@ -3,6 +3,7 @@ import { Ticket } from '../../interfaces/Ticket';
 import { CreateTicket } from '../../interfaces/CreateTicket';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { UpdateTicket } from '../../interfaces/UpdateTicket';
 
 @Injectable({
   providedIn: 'root',
@@ -35,5 +36,19 @@ export class TicketService {
       }
     );
   }
-  
+
+  putTicket(ticket:UpdateTicket, id:number) {
+
+    return this.http.put(this.apiUrl+"/"+id,
+      {
+        authorMsgTicket: ticket.authorMsgTicket,
+        devTicket: ticket.devTicket,
+        devMsgTicket: ticket.devMsgTicket,
+        updateDateTicket: ticket.updateDateTicket,
+        idStatusTicket: ticket.idStatusTicket,
+        idTypeTicket: ticket.idTypeTicket,
+      }
+    );
+  }
+
 }
