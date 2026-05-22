@@ -27,6 +27,10 @@ export class TableAll implements OnInit{
       return this.ticketService.getAllByDev(this.varService.currentUser);
     }
 
+    if (role === 'Responsable') {
+      return this.ticketService.getAll();
+    }
+
     return this.ticketService.getAllByAuthor(this.varService.currentUser);
   }));
 

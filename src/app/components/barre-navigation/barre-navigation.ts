@@ -50,7 +50,7 @@ export class BarreNavigation implements OnInit {
                       label: 'Stephane',
                       command: () => { this.varService.currentUser = "Stephane";
                             this.currentUser.set("Stephane");
-                            this.varService.setRole("Dev");
+                            this.varService.setRole("Responsable");
                             this.router.navigate(['']);
                        }
                   }
