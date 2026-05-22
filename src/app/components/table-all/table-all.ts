@@ -1,10 +1,11 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { TicketService } from '../../core/services/TicketService';
 import { AsyncPipe } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { GlobalVariables } from '../../core/services/global-variables';
 import { Router } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-table-all',
@@ -14,15 +15,30 @@ import { Router } from '@angular/router';
   templateUrl: './table-all.html',
   styleUrl: './table-all.scss',
 })
-export class TableAll {
+export class TableAll implements OnInit{
   private ticketService = inject(TicketService);
   private varService = inject(GlobalVariables);
   private router = inject(Router);
 
-  tickets$ = this.ticketService.getAll();
+  
+  tickets$ = this.varService.currentRole$.pipe(
+  switchMap(role => {
+    if (role === 'Dev') {
+      return this.ticketService.getAllByDev(this.varService.currentUser);
+    }
+
+    return this.ticketService.getAllByAuthor(this.varService.currentUser);
+  }));
+
+
+
   Role$ = this.varService.currentRole$;
 
-  
+  ngOnInit(){
+
+    
+    
+  }
 
 
 
