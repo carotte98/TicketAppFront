@@ -29,7 +29,7 @@
                     <p-inputgroup-addon>
                         <i class="pi pi-map"></i>
                     </p-inputgroup-addon>
-                    <p-select disabled [(ngModel)]="appTicket" [options]="apps$ | async" [optionValue]="appTicket?.nameApp"
+                    <p-select disabled [(ngModel)]="appTicket" [options]="apps$ | async" optionValue="idApp"
                         optionLabel="nameApp" placeholder="Application" />
                 </p-inputgroup>
 
@@ -40,7 +40,8 @@
                         <i class="pi pi-map"></i>
                     </p-inputgroup-addon>
                     <p-select [(ngModel)]="typeTicket" [options]="types$ | async"
-                        optionLabel="nameTicketType" placeholder="Type" [invalid]="valTypeTicket" />
+                        optionLabel="nameTicketType" placeholder="Type" [invalid]="valTypeTicket"
+                            optionValue="idTicketType" />
                 </p-inputgroup>
                 @if (valTypeTicket) {
                     <p-message severity="error" variant="simple" size="small">
@@ -90,7 +91,8 @@
                         <i class="pi pi-map"></i>
                     </p-inputgroup-addon>
                     <p-select [(ngModel)]="statusTicket" [options]="status$ | async"
-                        optionLabel="nameStatus" placeholder="Status" [invalid]="valStatusTicket" />
+                        optionLabel="nameStatus" placeholder="Status" [invalid]="valStatusTicket"
+                            optionValue="idStatus" />
                 </p-inputgroup>
                 @if (valStatusTicket) {
                     <p-message severity="error" variant="simple" size="small">

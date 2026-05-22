@@ -106,7 +106,7 @@ export class FormCreation implements OnInit {
   onSave(){
 
     if(!this.onValidate()){
-      
+
       console.log("click");
       console.log(this.typeTicket)
 
@@ -116,9 +116,9 @@ export class FormCreation implements OnInit {
         authorMsgTicket: this.authorMsgTicket!,
         startdateTicket: new Date(),
         updateDateTicket: new Date(),
-        appTicket: this.appTicket!.idApp,
+        appTicket: this.appTicket!.id,
         statusTicket: 1,
-        typeTicket: this.typeTicket!.idTicketType,
+        typeTicket: this.typeTicket!.id,
       }
 
       console.log(newTicket);

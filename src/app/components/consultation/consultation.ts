@@ -41,9 +41,9 @@ export class Consultation {
   nameTicket:string | undefined;
   authorTicket:string | undefined;
   authorMsgTicket:string | undefined;
-  appTicket:App | undefined;
-  typeTicket:Type | undefined;
-  statusTicket:Status | undefined;
+  typeTicket!: number;
+  statusTicket!: number;
+  appTicket!: number;
   devTicket:string | undefined;
   devMsgTicket:string | undefined;
 
@@ -71,9 +71,9 @@ export class Consultation {
       this.devTicket = ticket.devTicket;
       this.devMsgTicket = ticket.devMsgTicket;
 
-      this.appTicket = ticket.appTicket;
-      this.typeTicket = ticket.typeTicket;
-      this.statusTicket = ticket.statusTicket;
+      this.appTicket = ticket.appTicket.id;
+      this.typeTicket = ticket.typeTicket.id;
+      this.statusTicket = ticket.statusTicket.id;
       
       this.cdr.detectChanges();
     });
@@ -95,7 +95,7 @@ export class Consultation {
     console.log(this.statusTicket);
     console.log(this.typeTicket);
 
-    if(this.statusTicket === null){
+    if(this.statusTicket === undefined){
       flag = true;
       this.valStatusTicket = true;
     }
@@ -110,7 +110,7 @@ export class Consultation {
       this.valeDevMsg = true;
     }
 
-    if(this.typeTicket === null){
+    if(this.typeTicket === undefined){
       flag = true;
       this.valTypeTicket = true;
     }
@@ -129,8 +129,8 @@ export class Consultation {
         devMsgTicket: this.devMsgTicket!,
         authorMsgTicket: this.authorMsgTicket!,
         updateDateTicket: new Date(),
-        idStatusTicket: this.statusTicket!.idStatus,
-        idTypeTicket: this.typeTicket!.idTicketType,
+        idStatusTicket: this.statusTicket,
+        idTypeTicket: this.typeTicket,
       }
       
       console.log(newTicket);

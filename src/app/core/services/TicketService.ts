@@ -17,6 +17,14 @@ export class TicketService {
     return this.http.get<Ticket[]>(this.apiUrl);
   }
 
+  getAllByDev(name:string): Observable<Ticket[]>{
+    return this.http.get<Ticket[]>(this.apiUrl+"/dev/"+name);
+  }
+
+  getAllByAuthor(name:string): Observable<Ticket[]>{
+    return this.http.get<Ticket[]>(this.apiUrl+"/author/"+name);
+  }
+
   getById(id:number): Observable<Ticket>{
     return this.http.get<Ticket>(this.apiUrl+"/"+id);
   }
