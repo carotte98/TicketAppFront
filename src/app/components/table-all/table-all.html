@@ -69,7 +69,9 @@
                 <td>{{ ticket.updateDateTicket }}</td>
                 <td>{{ ticket.appTicket.name }}</td>
                 <td>{{ ticket.typeTicket.name }}</td>
-                <td>{{ ticket.statusTicket.name }}</td>
+                <td>
+                    <p-badge [value]="statusAffichage(ticket.statusTicket)" [severity]="statusSeverity(ticket.statusTicket)" />
+                </td>
                 <td><p-button (onClick)="onClick(ticket.idTicket)" label="Consulter" /></td>
             </tr>
         </ng-template>

@@ -6,11 +6,13 @@ import { ButtonModule } from 'primeng/button';
 import { GlobalVariables } from '../../core/services/global-variables';
 import { Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
+import { Badge } from "primeng/badge";
+import { Status } from '../../interfaces/Status';
 
 @Component({
   selector: 'app-table-all',
   standalone: true,
-  imports: [TableModule, AsyncPipe, ButtonModule],
+  imports: [TableModule, AsyncPipe, ButtonModule, Badge],
   providers: [TicketService],
   templateUrl: './table-all.html',
   styleUrl: './table-all.scss',
@@ -43,6 +45,18 @@ export class TableAll implements OnInit{
     
     
   }
+
+  statusAffichage(status: Status) {
+        if (status.name === "TERMINE             ") return "TERMINE";
+        else if (status.name === "PRIS EN CHARGE      ") return "PROGRES";
+        else return "ATTENTE";
+    }
+
+  statusSeverity(status: Status) {
+        if (status.name === "TERMINE             ") return 'danger';
+        else if (status.name === "PRIS EN CHARGE      ") return 'warn';
+        else return 'success';
+    }
 
 
 
