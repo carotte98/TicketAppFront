@@ -2,7 +2,7 @@
     <p-table [value]="(tickets$ | async) ?? []" stripedRows [tableStyle]="{ 'min-width': '50rem' }">
         <ng-template pTemplate="header">
             <tr>
-                <th pSortableColumn="id" style="width:20%">
+                <th pSortableColumn="idTicket" style="width:20%">
                     <div class="flex items-center gap-2">
                         ID
                         <p-sortIcon field="idTicket" />
