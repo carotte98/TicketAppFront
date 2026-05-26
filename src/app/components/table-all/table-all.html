@@ -65,8 +65,12 @@
                 <td>{{ ticket.nameTicket }}</td>
                 <td>{{ ticket.authorTicket }}</td>
                 <td>{{ ticket.devTicket }}</td>
-                <td>{{ ticket.startdateTicket }}</td>
-                <td>{{ ticket.updateDateTicket }}</td>
+                <td class="whitespace-nowrap min-w-[150px]">
+                    {{ ticket.startdateTicket | date:'dd-MM-yyyy HH:mm' }}
+                </td>
+                <td class="whitespace-nowrap min-w-[150px]">
+                    {{ ticket.updateDateTicket | date:'dd-MM-yyyy HH:mm' }}
+                </td>
                 <td>{{ ticket.appTicket.name }}</td>
                 <td>{{ ticket.typeTicket.name }}</td>
                 <td>

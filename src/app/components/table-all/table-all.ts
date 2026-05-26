@@ -1,7 +1,7 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { TicketService } from '../../core/services/TicketService';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, DatePipe } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { GlobalVariables } from '../../core/services/global-variables';
 import { Router } from '@angular/router';
@@ -12,7 +12,7 @@ import { Status } from '../../interfaces/Status';
 @Component({
   selector: 'app-table-all',
   standalone: true,
-  imports: [TableModule, AsyncPipe, ButtonModule, Badge],
+  imports: [TableModule, AsyncPipe, ButtonModule, Badge, DatePipe],
   providers: [TicketService],
   templateUrl: './table-all.html',
   styleUrl: './table-all.scss',
