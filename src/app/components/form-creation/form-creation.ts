@@ -33,6 +33,7 @@ import { MessageModule } from 'primeng/message';
     ButtonModule,
     FloatLabelModule,
     AsyncPipe,
+    MessageModule,
   ],
   providers: [AppService, TypeService, TicketService, Router],
   templateUrl: './form-creation.html',
