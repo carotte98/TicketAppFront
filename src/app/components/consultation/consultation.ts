@@ -109,12 +109,12 @@ export class Consultation {
       }
     }
 
-    if(this.varService.getRoleValue() === "Dev"){
-      if(this.devMsgTicket === null || this.devMsgTicket!.length < 5){
-        flag = true;
-        this.valeDevMsg = true;
-      }
+    
+    if(this.devMsgTicket === null || this.devMsgTicket!.length < 5){
+      flag = true;
+      this.valeDevMsg = true;
     }
+   
 
     
 
