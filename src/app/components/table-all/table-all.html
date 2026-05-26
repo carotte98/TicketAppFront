@@ -2,55 +2,55 @@
     <p-table [value]="(tickets$ | async) ?? []" stripedRows [tableStyle]="{ 'min-width': '50rem' }">
         <ng-template pTemplate="header">
             <tr>
-                <th pSortableColumn="idTicket" style="width:20%">
+                <th pSortableColumn="idTicket">
                     <div class="flex items-center gap-2">
                         ID
                         <p-sortIcon field="idTicket" />
                     </div>
                 </th>
-                <th pSortableColumn="nameTicket" style="width:20%">
+                <th pSortableColumn="nameTicket">
                     <div class="flex items-center gap-2">
                         Nom
                         <p-sortIcon field="nameTicket" />
                     </div>
                 </th>
-                <th pSortableColumn="authorTicket" style="width:20%">
+                <th pSortableColumn="authorTicket">
                     <div class="flex items-center gap-2">
                         Auteur
                         <p-sortIcon field="authorTicket" />
                     </div>
                 </th>
-                <th pSortableColumn="devTicket" style="width:20%">
+                <th pSortableColumn="devTicket">
                     <div class="flex items-center gap-2">
-                        Responsable
+                        Dev
                         <p-sortIcon field="devTicket" />
                     </div>
                 </th>
-                <th pSortableColumn="startdateTicket" style="width:20%">
+                <th pSortableColumn="startdateTicket">
                     <div class="flex items-center gap-2">
                         Date de début
                         <p-sortIcon field="startdateTicket" />
                     </div>
                 </th>
-                <th pSortableColumn="updateDateTicket" style="width:20%">
+                <th pSortableColumn="updateDateTicket">
                     <div class="flex items-center gap-2">
                         Date MàJ
                         <p-sortIcon field="updateDateTicket" />
                     </div>
                 </th>
-                <th pSortableColumn="appTicket.name" style="width:20%">
+                <th pSortableColumn="appTicket.name">
                     <div class="flex items-center gap-2">
-                        Application
+                        App
                         <p-sortIcon field="appTicket.name" />
                     </div>
                 </th>
-                <th pSortableColumn="typeTicket.name" style="width:20%">
+                <th pSortableColumn="typeTicket.name">
                     <div class="flex items-center gap-2">
                         Type
                         <p-sortIcon field="typeTicket.name" />
                     </div>
                 </th>
-                <th pSortableColumn="statusTicket.name" style="width:20%">
+                <th pSortableColumn="statusTicket.name">
                     <div class="flex items-center gap-2">
                         Statut
                         <p-sortIcon field="statusTicket.name" />
@@ -60,7 +60,7 @@
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-ticket>
-            <tr>
+            <tr class="text-center">
                 <td>{{ ticket.idTicket }}</td>
                 <td>{{ ticket.nameTicket }}</td>
                 <td>{{ ticket.authorTicket }}</td>
