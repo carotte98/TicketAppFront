@@ -48,6 +48,7 @@ export class FormCreation implements OnInit {
   private typeService = inject(TypeService);
   private router = inject(Router);
 
+  // LOCALS
   nameTicket:string | undefined;
   authorTicket:string | undefined;
   authorMsgTicket:string | undefined;
@@ -66,42 +67,49 @@ export class FormCreation implements OnInit {
   valTypeTicket: boolean | undefined;
 
   
-
+  // INIT: Sets the author to the current User
   ngOnInit() {
 
     this.authorTicket = this.varService.currentUser;
   }
 
+  // FORM VALIDATION
   onValidate():boolean{
 
     let flag = false;
 
+    // Reseting flags
     this.valNameTicket = false;
     this.valAuthorTicket = false;
     this.valAuthorMsgTicket = false;
     this.valAppTicket = false;
     this.valTypeTicket = false;
 
+    // Name of ticket has to be filled and over 3 chars
     if(this.nameTicket === undefined || this.nameTicket!.length < 3){
       flag = true;
       this.valNameTicket = true;
     }
 
+    // Author of ticket has to be filled and over 3 chars
     if(this.authorTicket === undefined || this.authorTicket!.length < 3){
       flag = true;
       this.valAuthorTicket = true;
     }
 
+    // Message of ticket has to be filled and over 5 chars
     if(this.authorMsgTicket === undefined || this.authorMsgTicket!.length < 5){
       flag = true;
       this.valAuthorMsgTicket = true;
     }
 
+    // An app has to be selected
     if(this.appTicket === undefined){
       flag = true;
       this.valAppTicket = true;
     }
 
+    // A type has to be selected
     if(this.typeTicket === undefined){
       flag = true;
       this.valTypeTicket = true;
@@ -110,13 +118,15 @@ export class FormCreation implements OnInit {
     return flag;
   }
 
+  // Creates a new Ticket
   onSave(){
 
+    // If Validation succeeded 
     if(!this.onValidate()){
 
-      console.log("click");
-      console.log(this.typeTicket)
-
+      // Taking the validated Inputs
+      // Using the current Date for the start and update Dates
+      // Status is set to "EN ATTENTE" (1)
       let newTicket:CreateTicket = {
         nameTicket: this.nameTicket!,
         authorTicket: this.authorTicket!,
@@ -128,8 +138,6 @@ export class FormCreation implements OnInit {
         typeTicket: this.typeTicket,
       }
 
-      console.log(newTicket);
-
       this.ticketService.postTicket(newTicket).subscribe({
         next: (response) => {
           console.log('Ticket created', response);
@@ -139,6 +147,7 @@ export class FormCreation implements OnInit {
         }
       });
 
+      // Sends back to HOME
       this.router.navigate(['']);
     }
     

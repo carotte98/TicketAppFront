@@ -18,14 +18,17 @@ export class TicketService {
     return this.http.get<Ticket[]>(this.apiUrl);
   }
 
+  // SENDS ALL TICKETS FROM ONE DEV
   getAllByDev(name:string): Observable<Ticket[]>{
     return this.http.get<Ticket[]>("http://localhost:5156/dev/"+name);
   }
 
+  // SENDS ALL TICKETS FROM ONE AUTHOR
   getAllByAuthor(name:string): Observable<Ticket[]>{
     return this.http.get<Ticket[]>("http://localhost:5156/author/"+name);
   }
 
+  // SENDS ONE TICKET WITH THAT ID
   getById(id:number): Observable<Ticket>{
     return this.http.get<Ticket>(this.apiUrl+"/"+id);
   }

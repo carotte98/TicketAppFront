@@ -10,7 +10,6 @@ import { Router } from '@angular/router';
   templateUrl: './barre-navigation.html',
   styleUrl: './barre-navigation.scss',
 })
-
 export class BarreNavigation implements OnInit {
   items: MenuItem[] | undefined;
 
@@ -57,7 +56,7 @@ export class BarreNavigation implements OnInit {
             command: () => {
               this.varService.currentUser = 'Stephane';
               this.currentUser.set('Stephane');
-              this.varService.setRole('Dev');
+              this.varService.setRole('Responsable');
               this.router.navigate(['']);
             },
           },
