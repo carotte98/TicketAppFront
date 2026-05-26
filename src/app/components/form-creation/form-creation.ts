@@ -40,8 +40,8 @@ export class FormCreation implements OnInit {
   nameTicket:string | undefined;
   authorTicket:string | undefined;
   authorMsgTicket:string | undefined;
-  appTicket:App | undefined;
-  typeTicket:Type | undefined;
+  appTicket!: number;
+  typeTicket!: number;
 
   apps$ = this.appService.getAll();
   types$ = this.typeService.getAll();
@@ -116,9 +116,9 @@ export class FormCreation implements OnInit {
         authorMsgTicket: this.authorMsgTicket!,
         startdateTicket: new Date(),
         updateDateTicket: new Date(),
-        appTicket: this.appTicket!.id,
+        appTicket: this.appTicket,
         statusTicket: 1,
-        typeTicket: this.typeTicket!.id,
+        typeTicket: this.typeTicket,
       }
 
       console.log(newTicket);

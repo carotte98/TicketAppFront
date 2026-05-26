@@ -102,15 +102,21 @@ export class Consultation {
       this.valStatusTicket = true;
     }
 
-    if(this.devTicket === null || this.devTicket!.length < 3){
-      flag = true;
-      this.valDevTicket = true;
+    if(this.varService.getRoleValue() === "Responsable"){
+      if(this.devTicket === null || this.devTicket!.length < 3){
+        flag = true;
+        this.valDevTicket = true;
+      }
     }
 
-    if(this.devMsgTicket === null || this.devMsgTicket!.length < 5){
-      flag = true;
-      this.valeDevMsg = true;
+    if(this.varService.getRoleValue() === "Dev"){
+      if(this.devMsgTicket === null || this.devMsgTicket!.length < 5){
+        flag = true;
+        this.valeDevMsg = true;
+      }
     }
+
+    
 
     if(this.typeTicket === undefined){
       flag = true;

@@ -59,7 +59,8 @@
             <p-inputgroup-addon>
                 <i class="pi pi-pencil"></i>
             </p-inputgroup-addon>
-            <input pInputText disabled [(ngModel)]="authorMsgTicket" placeholder="Message de l'auteur" />
+            <input pInputText disabled [(ngModel)]="authorMsgTicket" placeholder="Message de l'auteur"
+                [disabled]="(Role$ | async) !== 'User'" />
         </p-inputgroup>
         
 
