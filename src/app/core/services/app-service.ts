@@ -10,6 +10,7 @@ export class AppService {
   private http = inject(HttpClient);
   private apiUrl = "http://localhost:5156/api/App";
 
+  // SENDS BACK ALL APPS
   getAll(): Observable<App[]>{
       return this.http.get<App[]>(this.apiUrl);
   }

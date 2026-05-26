@@ -21,48 +21,54 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-form-creation',
   standalone: true,
-  imports: [SelectModule, InputGroupModule, InputGroupAddon, InputNumberModule,
-     InputTextModule, FormsModule, Panel, ButtonModule, FloatLabelModule, AsyncPipe],
-     providers: [AppService, TypeService, TicketService, Router],
+  imports: [
+    SelectModule,
+    InputGroupModule,
+    InputGroupAddon,
+    InputNumberModule,
+    InputTextModule,
+    FormsModule,
+    Panel,
+    ButtonModule,
+    FloatLabelModule,
+    AsyncPipe,
+  ],
+  providers: [AppService, TypeService, TicketService, Router],
   templateUrl: './form-creation.html',
   styleUrl: './form-creation.scss',
 })
 export class FormCreation implements OnInit {
 
+  // PROVIDERS
   private varService = inject(GlobalVariables);
   private ticketService = inject(TicketService);
   private appService = inject(AppService);
   private typeService = inject(TypeService);
   private router = inject(Router);
-  
 
-  nameTicket:string | undefined;
-  authorTicket:string | undefined;
-  authorMsgTicket:string | undefined;
-  appTicket:App | undefined;
-  typeTicket:Type | undefined;
+  // LOCAL VARIABLES
+  nameTicket: string | undefined;
+  authorTicket: string | undefined;
+  authorMsgTicket: string | undefined;
+  appTicket: App | undefined;
+  typeTicket: Type | undefined;
 
+  // OBSERVABLES
   apps$ = this.appService.getAll();
   types$ = this.typeService.getAll();
 
-  
-
+  // ON INIT : sets the author as the current User
   ngOnInit() {
 
-    console.log(this.varService.currentUser);
-    
     this.authorTicket = this.varService.currentUser;
-
-    this.types$.subscribe(data => console.log(data));
-
   }
 
-  onSave(){
+  // ON SAVE: saves the new Ticket, applies the current dates and default values
+  // Takes the User inputs and sends back to API
+  // Sends back to HOME when done
+  onSave() {
 
-    console.log("click");
-    console.log(this.typeTicket)
-
-    let newTicket:CreateTicket = {
+    let newTicket: CreateTicket = {
       nameTicket: this.nameTicket!,
       authorTicket: this.authorTicket!,
       authorMsgTicket: this.authorMsgTicket!,
@@ -71,9 +77,7 @@ export class FormCreation implements OnInit {
       appTicket: this.appTicket!.idApp,
       statusTicket: 1,
       typeTicket: this.typeTicket!.idTicketType,
-    }
-
-    console.log(newTicket);
+    };
 
     this.ticketService.postTicket(newTicket).subscribe({
       next: (response) => {
@@ -81,12 +85,14 @@ export class FormCreation implements OnInit {
       },
       error: (err) => {
         console.error('API error', err);
-      }
+      },
     });
 
     this.router.navigate(['']);
-  
   }
 
-  onCancel(){this.router.navigate(['']);}
+  // Sends back to HOME
+  onCancel() {
+    this.router.navigate(['']);
+  }
 }

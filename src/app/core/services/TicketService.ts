@@ -13,14 +13,17 @@ export class TicketService {
   private http = inject(HttpClient);
   private apiUrl = "http://localhost:5156/api/Ticket";
 
+  // SENDS BACK ALL TICKETS
   getAll(): Observable<Ticket[]>{
     return this.http.get<Ticket[]>(this.apiUrl);
   }
 
+  // SENDS BACK ONE TICKET WITH THAT ID
   getById(id:number): Observable<Ticket>{
     return this.http.get<Ticket>(this.apiUrl+"/"+id);
   }
 
+  // CREATES A NEW TICKET
   postTicket(ticket:CreateTicket) {
 
     return this.http.post(this.apiUrl,
@@ -37,6 +40,7 @@ export class TicketService {
     );
   }
 
+  // UPDATES ONE TICKET WITH THAT ID
   putTicket(ticket:UpdateTicket, id:number) {
 
     return this.http.put(this.apiUrl+"/"+id,

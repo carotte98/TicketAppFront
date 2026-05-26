@@ -15,21 +15,20 @@ import { Router } from '@angular/router';
   styleUrl: './table-all.scss',
 })
 export class TableAll {
+
+  // PROVIDERS
   private ticketService = inject(TicketService);
   private varService = inject(GlobalVariables);
   private router = inject(Router);
 
+  // OBSERVABLES
   tickets$ = this.ticketService.getAll();
   Role$ = this.varService.currentRole$;
 
-  
-
-
-
-  onClick(id:any){
-    console.log(id)
+  // Consult button function
+  // Sends to the consult page of a specific Ticket
+  onClick(id: any) {
     this.varService.currentId = id;
     this.router.navigate(['consult']);
-
   }
 }

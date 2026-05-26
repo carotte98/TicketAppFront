@@ -10,6 +10,7 @@ export class StatusService {
   private http = inject(HttpClient);
   private apiUrl = "http://localhost:5156/api/Status";
 
+  // SENDS BACK ALL STATUSES
   getAll(): Observable<Status[]>{
       return this.http.get<Status[]>(this.apiUrl);
   }

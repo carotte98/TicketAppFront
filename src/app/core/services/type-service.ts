@@ -10,6 +10,7 @@ export class TypeService {
   private http = inject(HttpClient);
   private apiUrl = "http://localhost:5156/api/TicketType";
 
+  // SENDS BACK ALL TYPES
   getAll(): Observable<Type[]>{
       return this.http.get<Type[]>(this.apiUrl);
   }

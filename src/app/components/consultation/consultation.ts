@@ -22,42 +22,53 @@ import { Status } from '../../interfaces/Status';
 
 @Component({
   selector: 'app-consultation',
-  imports: [SelectModule, InputGroupModule, InputGroupAddon, InputNumberModule,
-     InputTextModule, FormsModule, Panel, ButtonModule, FloatLabelModule, AsyncPipe],
-     providers: [AppService, TypeService, TicketService, Router],
+  imports: [
+    SelectModule,
+    InputGroupModule,
+    InputGroupAddon,
+    InputNumberModule,
+    InputTextModule,
+    FormsModule,
+    Panel,
+    ButtonModule,
+    FloatLabelModule,
+    AsyncPipe,
+  ],
+  providers: [AppService, TypeService, TicketService, Router],
   templateUrl: './consultation.html',
   styleUrl: './consultation.scss',
 })
 export class Consultation {
+
+  // PROVIDERS
   private varService = inject(GlobalVariables);
   private ticketService = inject(TicketService);
   private appService = inject(AppService);
   private typeService = inject(TypeService);
   private statusService = inject(StatusService);
   private router = inject(Router);
-  private cdr = inject(ChangeDetectorRef)
+  private cdr = inject(ChangeDetectorRef);
 
-  nameTicket:string | undefined;
-  authorTicket:string | undefined;
-  authorMsgTicket:string | undefined;
-  appTicket:App | undefined;
-  typeTicket:Type | undefined;
-  statusTicket:Status | undefined;
-  devTicket:string | undefined;
-  devMsgTicket:string | undefined;
+  // LOCAL VARIABLES
+  nameTicket: string | undefined;
+  authorTicket: string | undefined;
+  authorMsgTicket: string | undefined;
+  appTicket: App | undefined;
+  typeTicket: Type | undefined;
+  statusTicket: Status | undefined;
+  devTicket: string | undefined;
+  devMsgTicket: string | undefined;
 
+  // OBSERVABLES
   apps$ = this.appService.getAll();
   types$ = this.typeService.getAll();
   status$ = this.statusService.getAll();
 
   current$ = this.ticketService.getById(this.varService.currentId);
 
-  
-
+  // ON INIT: TAKES THE CURRENT TICKET AND FILLS VARIABLES
   ngOnInit() {
-
-    this.current$.subscribe(ticket => {
-
+    this.current$.subscribe((ticket) => {
       this.nameTicket = ticket.nameTicket;
       this.authorTicket = ticket.authorTicket;
       this.authorMsgTicket = ticket.authorMsgTicket;
@@ -67,43 +78,40 @@ export class Consultation {
       this.appTicket = ticket.appTicket;
       this.typeTicket = ticket.typeTicket;
       this.statusTicket = ticket.statusTicket;
-      
+
       this.cdr.detectChanges();
     });
   }
 
-  onSave(){
+  // LAUNCHES THE UPDATE OF THE TICKET
+  onSave() {
 
-    console.log("click");
-    
-
-    let newTicket:UpdateTicket = {
+    // Filling in the update interface
+    let newTicket: UpdateTicket = {
       devTicket: this.devTicket!,
       devMsgTicket: this.devMsgTicket!,
       authorMsgTicket: this.authorMsgTicket!,
       updateDateTicket: new Date(),
       idStatusTicket: this.statusTicket!.idStatus,
       idTypeTicket: this.typeTicket!.idTicketType,
-    }
-    
-    console.log(newTicket);
+    };
 
-    console.log(newTicket);
-
+    // Calling in the PUT of our Ticket Service
     this.ticketService.putTicket(newTicket, this.varService.currentId).subscribe({
       next: (response) => {
         console.log('Ticket updated', response);
       },
       error: (err) => {
         console.error('API error', err);
-      }
+      },
     });
 
+    // Going back to HOME
     this.router.navigate(['']);
-  
   }
 
-  onCancel(){this.router.navigate(['']);}
-
+  // Sends back to HOME
+  onCancel() {
+    this.router.navigate(['']);
+  }
 }
-
