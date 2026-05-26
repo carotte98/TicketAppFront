@@ -23,13 +23,25 @@ import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'app-consultation',
-  imports: [SelectModule, InputGroupModule, InputGroupAddon, InputNumberModule,
-     InputTextModule, FormsModule, Panel, ButtonModule, FloatLabelModule, AsyncPipe, MessageModule],
-     providers: [AppService, TypeService, TicketService, Router],
+  imports: [
+    SelectModule,
+    InputGroupModule,
+    InputGroupAddon,
+    InputNumberModule,
+    InputTextModule,
+    FormsModule,
+    Panel,
+    ButtonModule,
+    FloatLabelModule,
+    AsyncPipe,
+  ],
+  providers: [AppService, TypeService, TicketService, Router],
   templateUrl: './consultation.html',
   styleUrl: './consultation.scss',
 })
 export class Consultation {
+
+  // PROVIDERS
   private varService = inject(GlobalVariables);
   private ticketService = inject(TicketService);
   private appService = inject(AppService);
@@ -64,9 +76,7 @@ export class Consultation {
   
 
   ngOnInit() {
-
-    this.current$.subscribe(ticket => {
-
+    this.current$.subscribe((ticket) => {
       this.nameTicket = ticket.nameTicket;
       this.authorTicket = ticket.authorTicket;
       this.authorMsgTicket = ticket.authorMsgTicket;
@@ -159,7 +169,8 @@ export class Consultation {
   
   }
 
-  onCancel(){this.router.navigate(['']);}
-
+  // Sends back to HOME
+  onCancel() {
+    this.router.navigate(['']);
+  }
 }
-

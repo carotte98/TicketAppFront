@@ -5,16 +5,19 @@ import { Consultation } from './components/consultation/consultation';
 
 export const routes: Routes = [
     {
+        // HOME PAGE WITH ALL TABLE
         path: '',
         component: MainDev,
         title: 'Accueil'
     },
     {
+        // NEW TICKET PAGE
         path: 'forms',
         component: FormCreation,
         title: 'Soumission'
     },
     {
+        // UPDATE TICKET PAGE
         path: 'consult',
         component: Consultation,
         title: 'Consultation'

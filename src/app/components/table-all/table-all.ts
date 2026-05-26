@@ -64,6 +64,5 @@ export class TableAll implements OnInit{
     console.log(id)
     this.varService.currentId = id;
     this.router.navigate(['consult']);
-
   }
 }

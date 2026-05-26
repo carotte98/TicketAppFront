@@ -22,20 +22,30 @@ import { MessageModule } from 'primeng/message';
 @Component({
   selector: 'app-form-creation',
   standalone: true,
-  imports: [SelectModule, InputGroupModule, InputGroupAddon, InputNumberModule,
-     InputTextModule, FormsModule, Panel, ButtonModule, FloatLabelModule, AsyncPipe, MessageModule],
-     providers: [AppService, TypeService, TicketService, Router],
+  imports: [
+    SelectModule,
+    InputGroupModule,
+    InputGroupAddon,
+    InputNumberModule,
+    InputTextModule,
+    FormsModule,
+    Panel,
+    ButtonModule,
+    FloatLabelModule,
+    AsyncPipe,
+  ],
+  providers: [AppService, TypeService, TicketService, Router],
   templateUrl: './form-creation.html',
   styleUrl: './form-creation.scss',
 })
 export class FormCreation implements OnInit {
 
+  // PROVIDERS
   private varService = inject(GlobalVariables);
   private ticketService = inject(TicketService);
   private appService = inject(AppService);
   private typeService = inject(TypeService);
   private router = inject(Router);
-  
 
   nameTicket:string | undefined;
   authorTicket:string | undefined;
@@ -43,6 +53,7 @@ export class FormCreation implements OnInit {
   appTicket!: number;
   typeTicket!: number;
 
+  // OBSERVABLES
   apps$ = this.appService.getAll();
   types$ = this.typeService.getAll();
 
@@ -57,12 +68,7 @@ export class FormCreation implements OnInit {
 
   ngOnInit() {
 
-    console.log(this.varService.currentUser);
-    
     this.authorTicket = this.varService.currentUser;
-
-    this.types$.subscribe(data => console.log(data));
-
   }
 
   onValidate():boolean{
@@ -138,5 +144,8 @@ export class FormCreation implements OnInit {
   
   }
 
-  onCancel(){this.router.navigate(['']);}
+  // Sends back to HOME
+  onCancel() {
+    this.router.navigate(['']);
+  }
 }
