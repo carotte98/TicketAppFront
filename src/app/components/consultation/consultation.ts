@@ -19,6 +19,7 @@ import { UpdateTicket } from '../../interfaces/UpdateTicket';
 import { App } from '../../interfaces/App';
 import { Type } from '../../interfaces/Type';
 import { Status } from '../../interfaces/Status';
+import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'app-consultation',
@@ -47,26 +48,33 @@ export class Consultation {
   private typeService = inject(TypeService);
   private statusService = inject(StatusService);
   private router = inject(Router);
-  private cdr = inject(ChangeDetectorRef);
+  private cdr = inject(ChangeDetectorRef)
 
-  // LOCAL VARIABLES
-  nameTicket: string | undefined;
-  authorTicket: string | undefined;
-  authorMsgTicket: string | undefined;
-  appTicket: App | undefined;
-  typeTicket: Type | undefined;
-  statusTicket: Status | undefined;
-  devTicket: string | undefined;
-  devMsgTicket: string | undefined;
+  nameTicket:string | undefined;
+  authorTicket:string | undefined;
+  authorMsgTicket:string | undefined;
+  typeTicket!: number;
+  statusTicket!: number;
+  appTicket!: number;
+  devTicket:string | undefined;
+  devMsgTicket:string | undefined;
 
-  // OBSERVABLES
   apps$ = this.appService.getAll();
   types$ = this.typeService.getAll();
   status$ = this.statusService.getAll();
 
+  Role$ = this.varService.currentRole$;
+
   current$ = this.ticketService.getById(this.varService.currentId);
 
-  // ON INIT: TAKES THE CURRENT TICKET AND FILLS VARIABLES
+  // VARIABLES DE VALIDATIONS
+  valTypeTicket: boolean | undefined;
+  valStatusTicket: boolean | undefined;
+  valDevTicket: boolean | undefined;
+  valeDevMsg: boolean | undefined;
+
+  
+
   ngOnInit() {
     this.current$.subscribe((ticket) => {
       this.nameTicket = ticket.nameTicket;
@@ -75,39 +83,90 @@ export class Consultation {
       this.devTicket = ticket.devTicket;
       this.devMsgTicket = ticket.devMsgTicket;
 
-      this.appTicket = ticket.appTicket;
-      this.typeTicket = ticket.typeTicket;
-      this.statusTicket = ticket.statusTicket;
-
+      this.appTicket = ticket.appTicket.id;
+      this.typeTicket = ticket.typeTicket.id;
+      this.statusTicket = ticket.statusTicket.id;
+      
       this.cdr.detectChanges();
     });
+
+    
+
+    
   }
 
-  // LAUNCHES THE UPDATE OF THE TICKET
-  onSave() {
+  onValidate():boolean{
 
-    // Filling in the update interface
-    let newTicket: UpdateTicket = {
-      devTicket: this.devTicket!,
-      devMsgTicket: this.devMsgTicket!,
-      authorMsgTicket: this.authorMsgTicket!,
-      updateDateTicket: new Date(),
-      idStatusTicket: this.statusTicket!.idStatus,
-      idTypeTicket: this.typeTicket!.idTicketType,
-    };
+    let flag = false;
 
-    // Calling in the PUT of our Ticket Service
-    this.ticketService.putTicket(newTicket, this.varService.currentId).subscribe({
-      next: (response) => {
-        console.log('Ticket updated', response);
-      },
-      error: (err) => {
-        console.error('API error', err);
-      },
-    });
+    this.valTypeTicket = false;
+    this.valStatusTicket = false;
+    this.valDevTicket = false;
+    this.valeDevMsg = false;
 
-    // Going back to HOME
-    this.router.navigate(['']);
+    console.log(this.statusTicket);
+    console.log(this.typeTicket);
+
+    if(this.statusTicket === undefined){
+      flag = true;
+      this.valStatusTicket = true;
+    }
+
+    if(this.varService.getRoleValue() === "Responsable"){
+      if(this.devTicket === null || this.devTicket!.length < 3){
+        flag = true;
+        this.valDevTicket = true;
+      }
+    }
+
+    
+    if(this.devMsgTicket === null || this.devMsgTicket!.length < 5){
+      flag = true;
+      this.valeDevMsg = true;
+    }
+   
+
+    
+
+    if(this.typeTicket === undefined){
+      flag = true;
+      this.valTypeTicket = true;
+    }
+
+    return flag;
+  }
+
+  onSave(){
+
+    if(!this.onValidate()){
+      console.log("click");
+    
+
+      let newTicket:UpdateTicket = {
+        devTicket: this.devTicket!,
+        devMsgTicket: this.devMsgTicket!,
+        authorMsgTicket: this.authorMsgTicket!,
+        updateDateTicket: new Date(),
+        idStatusTicket: this.statusTicket,
+        idTypeTicket: this.typeTicket,
+      }
+      
+      console.log(newTicket);
+
+      console.log(newTicket);
+
+      this.ticketService.putTicket(newTicket, this.varService.currentId).subscribe({
+        next: (response) => {
+          console.log('Ticket updated', response);
+        },
+        error: (err) => {
+          console.error('API error', err);
+        }
+      });
+
+      this.router.navigate(['']);
+    }
+  
   }
 
   // Sends back to HOME

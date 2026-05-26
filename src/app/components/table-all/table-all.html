@@ -2,31 +2,81 @@
     <p-table [value]="(tickets$ | async) ?? []" stripedRows [tableStyle]="{ 'min-width': '50rem' }">
         <ng-template pTemplate="header">
             <tr>
-                <th>ID</th>
-                <th>Nom Du Ticket</th>
-                <th>Auteur</th>
-                <th>Responsable</th>
-                <th>Date de début</th>
-                <th>Dernière MàJ</th>
-                <th>Application</th>
-                <th>Type</th>
-                <th>Statut</th>
-                @if ((Role$ | async) == "Dev") {<th></th>}
+                <th pSortableColumn="idTicket">
+                    <div class="flex items-center gap-2">
+                        ID
+                        <p-sortIcon field="idTicket" />
+                    </div>
+                </th>
+                <th pSortableColumn="nameTicket">
+                    <div class="flex items-center gap-2">
+                        Nom
+                        <p-sortIcon field="nameTicket" />
+                    </div>
+                </th>
+                <th pSortableColumn="authorTicket">
+                    <div class="flex items-center gap-2">
+                        Auteur
+                        <p-sortIcon field="authorTicket" />
+                    </div>
+                </th>
+                <th pSortableColumn="devTicket">
+                    <div class="flex items-center gap-2">
+                        Dev
+                        <p-sortIcon field="devTicket" />
+                    </div>
+                </th>
+                <th pSortableColumn="startdateTicket">
+                    <div class="flex items-center gap-2">
+                        Date de début
+                        <p-sortIcon field="startdateTicket" />
+                    </div>
+                </th>
+                <th pSortableColumn="updateDateTicket">
+                    <div class="flex items-center gap-2">
+                        Date MàJ
+                        <p-sortIcon field="updateDateTicket" />
+                    </div>
+                </th>
+                <th pSortableColumn="appTicket.name">
+                    <div class="flex items-center gap-2">
+                        App
+                        <p-sortIcon field="appTicket.name" />
+                    </div>
+                </th>
+                <th pSortableColumn="typeTicket.name">
+                    <div class="flex items-center gap-2">
+                        Type
+                        <p-sortIcon field="typeTicket.name" />
+                    </div>
+                </th>
+                <th pSortableColumn="statusTicket.name">
+                    <div class="flex items-center gap-2">
+                        Statut
+                        <p-sortIcon field="statusTicket.name" />
+                    </div>
+                </th>
+                <th></th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-ticket>
-            <tr>
+            <tr class="text-center">
                 <td>{{ ticket.idTicket }}</td>
                 <td>{{ ticket.nameTicket }}</td>
                 <td>{{ ticket.authorTicket }}</td>
                 <td>{{ ticket.devTicket }}</td>
-                <td>{{ ticket.startdateTicket }}</td>
-                <td>{{ ticket.updateDateTicket }}</td>
+                <td class="whitespace-nowrap min-w-[150px]">
+                    {{ ticket.startdateTicket | date:'dd-MM-yyyy HH:mm' }}
+                </td>
+                <td class="whitespace-nowrap min-w-[150px]">
+                    {{ ticket.updateDateTicket | date:'dd-MM-yyyy HH:mm' }}
+                </td>
                 <td>{{ ticket.appTicket.name }}</td>
                 <td>{{ ticket.typeTicket.name }}</td>
-                <td>{{ ticket.statusTicket.name }}</td>
-                @if ((Role$ | async) == "Dev"){
-                    <td><p-button (onClick)="onClick(ticket.idTicket)" label="Consulter" /></td>}
+                <td>
+                    <p-badge [value]="statusAffichage(ticket.statusTicket)" [severity]="statusSeverity(ticket.statusTicket)" />
+                </td>
+                <td><p-button (onClick)="onClick(ticket.idTicket)" label="Consulter" /></td>
             </tr>
         </ng-template>
     </p-table>

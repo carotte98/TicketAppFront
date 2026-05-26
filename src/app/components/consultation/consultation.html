@@ -4,6 +4,7 @@
 
             <div class="m-2 w-1/2">
                 <!-- NOM DU TICKET -->
+                <label>Nom du Ticket</label>
                 <p-inputgroup class="my-2">
                     <p-inputgroup-addon>
                         <i class="pi pi-file"></i>
@@ -12,6 +13,7 @@
                 </p-inputgroup>
 
                 <!-- NOM DE L'AUTEUR -->
+                 <label>Nome de l'auteur</label>
                 <p-inputgroup class="my-2">
                     <p-inputgroup-addon>
                         <i class="pi pi-user"></i>
@@ -22,33 +24,43 @@
 
             <div class="m-2 w-1/2">
                 <!-- APPLICATION -->
+                 <label>Application concernée</label>
                 <p-inputgroup class="my-2">
                     <p-inputgroup-addon>
                         <i class="pi pi-map"></i>
                     </p-inputgroup-addon>
-                    <p-select disabled [(ngModel)]="appTicket" [options]="apps$ | async" [optionValue]="appTicket?.nameApp"
+                    <p-select disabled [(ngModel)]="appTicket" [options]="apps$ | async" optionValue="idApp"
                         optionLabel="nameApp" placeholder="Application" />
                 </p-inputgroup>
 
                 <!-- TYPE -->
+                 <label>Type du ticket</label>
                 <p-inputgroup class="my-2">
                     <p-inputgroup-addon>
                         <i class="pi pi-map"></i>
                     </p-inputgroup-addon>
-                    <p-select [(ngModel)]="typeTicket" [options]="types$ | async"
-                        optionLabel="nameTicketType" placeholder="Type" />
+                    <p-select [(ngModel)]="typeTicket" [options]="types$ | async" [disabled]="(Role$ | async) !== 'Dev' && (Role$ | async) !== 'Responsable'"
+                        optionLabel="nameTicketType" placeholder="Type" [invalid]="valTypeTicket"
+                            optionValue="idTicketType" />
                 </p-inputgroup>
+                @if (valTypeTicket) {
+                    <p-message severity="error" variant="simple" size="small">
+                        Veuillez choisir un Type ! 
+                    </p-message>
+                }
             </div>
 
             
         </section>
 
         <!-- MESSAGE DE L'AUTEUR -->
+         <label>Description du Ticket</label>
         <p-inputgroup class="my-2">
             <p-inputgroup-addon>
                 <i class="pi pi-pencil"></i>
             </p-inputgroup-addon>
-            <input pInputText disabled [(ngModel)]="authorMsgTicket" placeholder="Message de l'auteur" />
+            <input pInputText disabled [(ngModel)]="authorMsgTicket" placeholder="Message de l'auteur"
+                [disabled]="(Role$ | async) !== 'User'" />
         </p-inputgroup>
         
 
@@ -57,23 +69,37 @@
             <div class="m-2 w-1/2">
                 
                 <!-- NOM DU dev -->
+                 <label>Dev responsable du Ticket</label>
                 <p-inputgroup class="my-2">
                     <p-inputgroup-addon>
                         <i class="pi pi-user"></i>
                     </p-inputgroup-addon>
-                    <input pInputText [(ngModel)]="devTicket" placeholder="Responsable du Ticket" />
+                    <input pInputText [(ngModel)]="devTicket" placeholder="Responsable du Ticket"
+                        [invalid]="valDevTicket" [disabled]="(Role$ | async) !== 'Responsable'" />
                 </p-inputgroup>
+                @if (valDevTicket) {
+                    <p-message severity="error" variant="simple" size="small">
+                        Le Nom du Dev est obligatoire ! (3 à 50 caractères) 
+                    </p-message>
+                }
             </div>
 
             <div class="m-2 w-1/2">
                 <!-- Status -->
+                 <label>Statut du Ticket</label>
                 <p-inputgroup class="my-2">
                     <p-inputgroup-addon>
                         <i class="pi pi-map"></i>
                     </p-inputgroup-addon>
                     <p-select [(ngModel)]="statusTicket" [options]="status$ | async"
-                        optionLabel="nameStatus" placeholder="Status" />
+                        optionLabel="nameStatus" placeholder="Status" [invalid]="valStatusTicket"
+                            optionValue="idStatus" [disabled]="(Role$ | async) !== 'Dev' && (Role$ | async) !== 'Responsable'" />
                 </p-inputgroup>
+                @if (valStatusTicket) {
+                    <p-message severity="error" variant="simple" size="small">
+                        Veuillez choisir un Statut ! 
+                    </p-message>
+                }
 
             </div>
 
@@ -81,12 +107,19 @@
         </section>
 
         <!-- MESSAGE DU DEV -->
+         <label>Message à l'utilisateur</label>
         <p-inputgroup class="my-2">
             <p-inputgroup-addon>
                 <i class="pi pi-pencil"></i>
             </p-inputgroup-addon>
-            <input pInputText [(ngModel)]="devMsgTicket" placeholder="Message du dev" />
+            <input pInputText [(ngModel)]="devMsgTicket" placeholder="Message du dev"
+                [invalid]="valeDevMsg" [disabled]="(Role$ | async) !== 'Dev' && (Role$ | async) !== 'Responsable'"/>
         </p-inputgroup>
+        @if (valeDevMsg) {
+            <p-message severity="error" variant="simple" size="small">
+                Le Message à l'utilisateur est obligatoire ! (5 à 50 caractères) 
+            </p-message>
+        }
 
 
         <section class="flex flex-row w-full justify-end">

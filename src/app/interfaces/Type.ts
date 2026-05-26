@@ -1,4 +1,4 @@
 export interface Type{
-    idTicketType:number;
-    nameTicketType:string;
+    id:number;
+    name:string;
 }

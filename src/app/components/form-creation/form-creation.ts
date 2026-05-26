@@ -17,6 +17,7 @@ import { AsyncPipe } from '@angular/common';
 import { TicketService } from '../../core/services/TicketService';
 import { CreateTicket } from '../../interfaces/CreateTicket';
 import { Router } from '@angular/router';
+import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'app-form-creation',
@@ -46,49 +47,101 @@ export class FormCreation implements OnInit {
   private typeService = inject(TypeService);
   private router = inject(Router);
 
-  // LOCAL VARIABLES
-  nameTicket: string | undefined;
-  authorTicket: string | undefined;
-  authorMsgTicket: string | undefined;
-  appTicket: App | undefined;
-  typeTicket: Type | undefined;
+  nameTicket:string | undefined;
+  authorTicket:string | undefined;
+  authorMsgTicket:string | undefined;
+  appTicket!: number;
+  typeTicket!: number;
 
   // OBSERVABLES
   apps$ = this.appService.getAll();
   types$ = this.typeService.getAll();
 
-  // ON INIT : sets the author as the current User
+  // VARIABLES DE VALIDATIONS
+  valNameTicket: boolean | undefined;
+  valAuthorTicket: boolean | undefined;
+  valAuthorMsgTicket: boolean | undefined;
+  valAppTicket: boolean | undefined;
+  valTypeTicket: boolean | undefined;
+
+  
+
   ngOnInit() {
 
     this.authorTicket = this.varService.currentUser;
   }
 
-  // ON SAVE: saves the new Ticket, applies the current dates and default values
-  // Takes the User inputs and sends back to API
-  // Sends back to HOME when done
-  onSave() {
+  onValidate():boolean{
 
-    let newTicket: CreateTicket = {
-      nameTicket: this.nameTicket!,
-      authorTicket: this.authorTicket!,
-      authorMsgTicket: this.authorMsgTicket!,
-      startdateTicket: new Date(),
-      updateDateTicket: new Date(),
-      appTicket: this.appTicket!.idApp,
-      statusTicket: 1,
-      typeTicket: this.typeTicket!.idTicketType,
-    };
+    let flag = false;
 
-    this.ticketService.postTicket(newTicket).subscribe({
-      next: (response) => {
-        console.log('Ticket created', response);
-      },
-      error: (err) => {
-        console.error('API error', err);
-      },
-    });
+    this.valNameTicket = false;
+    this.valAuthorTicket = false;
+    this.valAuthorMsgTicket = false;
+    this.valAppTicket = false;
+    this.valTypeTicket = false;
 
-    this.router.navigate(['']);
+    if(this.nameTicket === undefined || this.nameTicket!.length < 3){
+      flag = true;
+      this.valNameTicket = true;
+    }
+
+    if(this.authorTicket === undefined || this.authorTicket!.length < 3){
+      flag = true;
+      this.valAuthorTicket = true;
+    }
+
+    if(this.authorMsgTicket === undefined || this.authorMsgTicket!.length < 5){
+      flag = true;
+      this.valAuthorMsgTicket = true;
+    }
+
+    if(this.appTicket === undefined){
+      flag = true;
+      this.valAppTicket = true;
+    }
+
+    if(this.typeTicket === undefined){
+      flag = true;
+      this.valTypeTicket = true;
+    }
+
+    return flag;
+  }
+
+  onSave(){
+
+    if(!this.onValidate()){
+
+      console.log("click");
+      console.log(this.typeTicket)
+
+      let newTicket:CreateTicket = {
+        nameTicket: this.nameTicket!,
+        authorTicket: this.authorTicket!,
+        authorMsgTicket: this.authorMsgTicket!,
+        startdateTicket: new Date(),
+        updateDateTicket: new Date(),
+        appTicket: this.appTicket,
+        statusTicket: 1,
+        typeTicket: this.typeTicket,
+      }
+
+      console.log(newTicket);
+
+      this.ticketService.postTicket(newTicket).subscribe({
+        next: (response) => {
+          console.log('Ticket created', response);
+        },
+        error: (err) => {
+          console.error('API error', err);
+        }
+      });
+
+      this.router.navigate(['']);
+    }
+    
+  
   }
 
   // Sends back to HOME

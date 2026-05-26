@@ -18,7 +18,14 @@ export class TicketService {
     return this.http.get<Ticket[]>(this.apiUrl);
   }
 
-  // SENDS BACK ONE TICKET WITH THAT ID
+  getAllByDev(name:string): Observable<Ticket[]>{
+    return this.http.get<Ticket[]>("http://localhost:5156/dev/"+name);
+  }
+
+  getAllByAuthor(name:string): Observable<Ticket[]>{
+    return this.http.get<Ticket[]>("http://localhost:5156/author/"+name);
+  }
+
   getById(id:number): Observable<Ticket>{
     return this.http.get<Ticket>(this.apiUrl+"/"+id);
   }
