@@ -16,9 +16,6 @@ import { TicketService } from '../../core/services/TicketService';
 import { Router } from '@angular/router';
 import { StatusService } from '../../core/services/status-service';
 import { UpdateTicket } from '../../interfaces/UpdateTicket';
-import { App } from '../../interfaces/App';
-import { Type } from '../../interfaces/Type';
-import { Status } from '../../interfaces/Status';
 import { MessageModule } from 'primeng/message';
 
 @Component({
@@ -34,13 +31,13 @@ import { MessageModule } from 'primeng/message';
     ButtonModule,
     FloatLabelModule,
     AsyncPipe,
+    MessageModule,
   ],
   providers: [AppService, TypeService, TicketService, Router],
   templateUrl: './consultation.html',
   styleUrl: './consultation.scss',
 })
 export class Consultation {
-
   // PROVIDERS
   private varService = inject(GlobalVariables);
   private ticketService = inject(TicketService);
@@ -48,17 +45,19 @@ export class Consultation {
   private typeService = inject(TypeService);
   private statusService = inject(StatusService);
   private router = inject(Router);
-  private cdr = inject(ChangeDetectorRef)
+  private cdr = inject(ChangeDetectorRef);
 
-  nameTicket:string | undefined;
-  authorTicket:string | undefined;
-  authorMsgTicket:string | undefined;
+  // LOCALS
+  nameTicket: string | undefined;
+  authorTicket: string | undefined;
+  authorMsgTicket: string | undefined;
   typeTicket!: number;
   statusTicket!: number;
   appTicket!: number;
-  devTicket:string | undefined;
-  devMsgTicket:string | undefined;
+  devTicket: string | undefined;
+  devMsgTicket: string | undefined;
 
+  // OBSERVABLES
   apps$ = this.appService.getAll();
   types$ = this.typeService.getAll();
   status$ = this.statusService.getAll();
@@ -73,8 +72,7 @@ export class Consultation {
   valDevTicket: boolean | undefined;
   valeDevMsg: boolean | undefined;
 
-  
-
+  // INIT: Fills the locals with their values
   ngOnInit() {
     this.current$.subscribe((ticket) => {
       this.nameTicket = ticket.nameTicket;
@@ -86,49 +84,43 @@ export class Consultation {
       this.appTicket = ticket.appTicket.id;
       this.typeTicket = ticket.typeTicket.id;
       this.statusTicket = ticket.statusTicket.id;
-      
+
       this.cdr.detectChanges();
     });
-
-    
-
-    
   }
 
-  onValidate():boolean{
-
+  // VALIDATION OF FORM
+  onValidate(): boolean {
     let flag = false;
 
+    // RESETING FLAGS
     this.valTypeTicket = false;
     this.valStatusTicket = false;
     this.valDevTicket = false;
     this.valeDevMsg = false;
 
-    console.log(this.statusTicket);
-    console.log(this.typeTicket);
-
-    if(this.statusTicket === undefined){
+    // Status has to be selected
+    if (this.statusTicket === undefined) {
       flag = true;
       this.valStatusTicket = true;
     }
 
-    if(this.varService.getRoleValue() === "Responsable"){
-      if(this.devTicket === null || this.devTicket!.length < 3){
+    // If Supervisor ==> check that a dev has been assigned
+    if (this.varService.getRoleValue() === 'Responsable') {
+      if (this.devTicket === null || this.devTicket!.length < 3) {
         flag = true;
         this.valDevTicket = true;
       }
     }
 
-    
-    if(this.devMsgTicket === null || this.devMsgTicket!.length < 5){
+    // Check that the message to the user isn't blank and over 5 chars
+    if (this.devMsgTicket === null || this.devMsgTicket!.length < 5) {
       flag = true;
       this.valeDevMsg = true;
     }
-   
 
-    
-
-    if(this.typeTicket === undefined){
+    // Check a Type is selected 
+    if (this.typeTicket === undefined) {
       flag = true;
       this.valTypeTicket = true;
     }
@@ -136,24 +128,20 @@ export class Consultation {
     return flag;
   }
 
-  onSave(){
+  // Update Ticket
+  onSave() {
 
-    if(!this.onValidate()){
-      console.log("click");
-    
+    // If Validation Succeeds
+    if (!this.onValidate()) {
 
-      let newTicket:UpdateTicket = {
+      let newTicket: UpdateTicket = {
         devTicket: this.devTicket!,
         devMsgTicket: this.devMsgTicket!,
         authorMsgTicket: this.authorMsgTicket!,
         updateDateTicket: new Date(),
         idStatusTicket: this.statusTicket,
         idTypeTicket: this.typeTicket,
-      }
-      
-      console.log(newTicket);
-
-      console.log(newTicket);
+      };
 
       this.ticketService.putTicket(newTicket, this.varService.currentId).subscribe({
         next: (response) => {
@@ -161,12 +149,12 @@ export class Consultation {
         },
         error: (err) => {
           console.error('API error', err);
-        }
+        },
       });
 
+      // Sends back to HOME
       this.router.navigate(['']);
     }
-  
   }
 
   // Sends back to HOME
