@@ -5,10 +5,10 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class GlobalVariables {
-  public currentUser: string = 'Brahim';
+  public currentUser: string = 'Stephane';
 
   // CREATES AN OBSERVABLE ROLE
-  private roleSubject = new BehaviorSubject<string>('Dev');
+  private roleSubject = new BehaviorSubject<string>('Responsable');
   currentRole$ = this.roleSubject.asObservable();
 
   public currentId: number = 0;

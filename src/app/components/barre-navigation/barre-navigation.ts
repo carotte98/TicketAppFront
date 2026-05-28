@@ -18,17 +18,14 @@ export class BarreNavigation implements OnInit {
   private router = inject(Router);
 
   // LOCAL VARIABLES
-  currentUser = signal('Brahim');
+  currentUser = signal('Stephane');
   userLabel = computed(() => `Bonjour ${this.currentUser()}`);
 
   // ON INIT
   // Sets up the navbar, the DEV and User buttons set the current User, Role and reloads the All Table
   ngOnInit() {
     this.items = [
-      {
-        label: 'Home',
-        icon: 'pi pi-home',
-      },
+      
       {
         label: 'Developpeurs',
         icon: 'pi pi-user-edit',
